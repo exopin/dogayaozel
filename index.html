@@ -34,7 +34,7 @@
 
     .button-container {
       position: relative;
-      width: 300px;
+      width: 320px;
       height: 60px;
     }
 
@@ -51,6 +51,7 @@
       user-select: none;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+      z-index: 10;
     }
 
     button:active {
@@ -62,6 +63,7 @@
       left: 0;
       background-color: #4CAF50;
       box-shadow: 0 5px 15px #2e7d32;
+      z-index: 20; /* Ön planda */
     }
 
     .yes-button:hover {
@@ -72,8 +74,7 @@
     .no-button {
       background-color: #f44336;
       left: 180px;
-      transition: left 0.3s ease, top 0.3s ease;
-      box-shadow: 0 5px 15px #b71c1c;
+      transition: left 0.1s ease, top 0.1s ease;
     }
 
     /* Tatlı figürler için stil */
@@ -153,6 +154,7 @@
 
     const containerRect = container.getBoundingClientRect();
 
+    // Başlangıç pozisyonu
     noBtn.style.left = '180px';
     noBtn.style.top = '0px';
 
@@ -164,11 +166,12 @@
       );
 
       if (distance < 150) {
-        const maxX = containerRect.width - rect.width;
-        const maxY = containerRect.height - rect.height;
+        const maxX = container.clientWidth - rect.width;
+        const maxY = container.clientHeight - rect.height;
 
-        const newX = Math.min(maxX, Math.max(0, Math.random() * maxX));
-        const newY = Math.min(maxY, Math.max(0, Math.random() * maxY));
+        // Yeni pozisyon: container sınırları içinde kalacak
+        let newX = Math.random() * maxX;
+        let newY = Math.random() * maxY;
 
         noBtn.style.transition = 'left 0.1s ease, top 0.1s ease';
         noBtn.style.left = newX + 'px';
