@@ -89,3 +89,100 @@
     }
 
     .figure {
+      position: absolute;
+      opacity: 0.3;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .figure.sun {
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at center, #FFD93B, #F4B740);
+      border-radius: 50%;
+      box-shadow: 0 0 15px #FFD93B;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .figure.cloud {
+      width: 80px;
+      height: 50px;
+      background: #fff;
+      border-radius: 40px;
+      box-shadow: 20px 10px 0 10px #fff, 40px 10px 0 10px #fff;
+      top: 20%;
+      left: 70%;
+      animation-delay: 3s;
+    }
+
+    .figure.star {
+      width: 15px;
+      height: 15px;
+      background: #fff;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      top: 75%;
+      left: 50%;
+      animation-delay: 5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); opacity: 0.3; }
+      50% { transform: translateY(-15px); opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>DOĞA SELAM, GÜNEŞİM OLUP DOĞAr MISIN?</h1>
+
+  <div class="button-container" id="buttonContainer">
+    <button class="yes-button" id="yesBtn">SONSUZA KADAR</button>
+    <button class="no-button" id="noBtn">ASLA</button>
+  </div>
+
+  <div class="figures">
+    <div class="figure sun"></div>
+    <div class="figure cloud"></div>
+    <div class="figure star"></div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const container = document.getElementById('buttonContainer');
+
+    const containerRect = container.getBoundingClientRect();
+
+    // Başlangıç konumu
+    noBtn.style.left = '180px';
+    noBtn.style.top = '0px';
+
+    document.body.addEventListener('mousemove', (e) => {
+      const rect = noBtn.getBoundingClientRect();
+      const distance = Math.hypot(
+        e.clientX - (rect.left + rect.width / 2),
+        e.clientY - (rect.top + rect.height / 2)
+      );
+
+      if (distance < 120) {
+        // Yeni pozisyonları container sınırları içinde hesapla
+        const maxX = containerRect.width - rect.width;
+        const maxY = containerRect.height - rect.height;
+
+        const newX = Math.min(maxX, Math.max(0, Math.random() * maxX));
+        const newY = Math.min(maxY, Math.max(0, Math.random() * maxY));
+
+        noBtn.style.left = newX + 'px';
+        noBtn.style.top = newY + 'px';
+      }
+    });
+
+    // Yeşil butona basınca eğlenceli alert
+    const yesBtn = document.getElementById('yesBtn');
+    yesBtn.addEventListener('click', () => {
+      alert('Teşekkürler! Sonsuza kadar birlikteyiz 🌞💚');
+    });
+  </script>
+
+</body>
+</html>
